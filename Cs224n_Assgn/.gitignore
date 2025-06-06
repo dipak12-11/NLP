@@ -1,0 +1,36 @@
+# Bytecode and cache
+__pycache__/
+*.py[cod]
+*.ipynb_checkpoints/
+
+# Environment + OS-specific files
+.env
+*.env
+env.yml
+local_env.yml
+.venv/
+venv/
+*.DS_Store
+*.swp
+*.swo
+
+# Zipped and binary files
+*.zip
+*.tar.gz
+*.tar
+*.rar
+
+# Jupyter & runtime junk
+.ipynb_checkpoints/
+*.checkpoint
+*.nbconvert.ipynb
+
+# Data & large files
+*.txt
+data/
+GloVe/wikipedia.txt
+Word2Vec/wikipedia.txt
+Word2Vec/Data/
+
+# Submission/auto-gen scripts
+collect_submission.sh
