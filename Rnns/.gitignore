@@ -1,0 +1,20 @@
+# 🧹 Ignore Python virtual environments
+venv/
+.env
+pyvenv.cfg
+
+# 🧪 Bytecode + cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# 🛠 VSCode settings
+.vscode/
+
+# 💾 OS files
+.DS_Store
+Thumbs.db
+
+# 📦 Package lock files
+*.egg-info/
