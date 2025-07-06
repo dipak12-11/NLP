@@ -26,5 +26,8 @@ idx_to_word={idx:word for idx,word in enumerate(vocab)}
 x = [[word_to_idx[word] for word in seq] for seq in input_sequences]
 y = [word_to_idx[word] for word in target]
 
-# print("Input sequence example:", x[0])
-# print("Target word example:", y[0])
+print("Input sequence example:", x[0:3])
+print("Target word example:", y[0:3])
+
+data=list(zip(x, y))
+# print("Number of training examples:", len(data))
