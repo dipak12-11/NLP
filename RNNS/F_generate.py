@@ -1,6 +1,6 @@
-# E_generate.py
+
 import numpy as np
-from D_main_RNN import one_hot  # if stored there
+from D_main_RNN import one_hot  
 
 def generate_lyrics(model, seed_word, word_to_ix, ix_to_word, length=50):
     vocab_size = len(word_to_ix)

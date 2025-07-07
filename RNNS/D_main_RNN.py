@@ -51,23 +51,23 @@ class WordRNN:
     dh_next = numpy.zeros_like(hs[0])
     loss = 0
 
-    # We compute loss and gradient only from the **last time step** (standard for word-level RNNs)
-    t = len(x_seq) - 1  # last time step
-    dy = numpy.copy(ps[t])  # shape: (vocab_size, 1)
+    
+    t = len(x_seq) - 1  
+    dy = numpy.copy(ps[t]) )
 
     if dy.ndim == 1:
         dy = dy.reshape(-1, 1)
 
     target_idx = y_target if isinstance(y_target, int) else y_target[0]
-    dy[target_idx, 0] -= 1  # gradient of softmax + cross-entropy
+    dy[target_idx, 0] -= 1  
 
-    loss += -numpy.log(ps[t][target_idx, 0] + 1e-9)  # scalar loss (add epsilon for stability)
+    loss += -numpy.log(ps[t][target_idx, 0] + 1e-9)  
 
-    dWhy += numpy.dot(hs[t], dy.T)  # (hidden, 1) x (1, vocab) = (hidden, vocab)
+    dWhy += numpy.dot(hs[t], dy.T)  
     # print("dby shape:", dby.shape)
     dby  += dy
 
-    # Backprop through time for hidden state
+   
     dh = numpy.dot(self.W_y, dy) + dh_next  # shape: (hidden, 1)
     # print("dh shape:", dh.shape)
 
@@ -75,10 +75,10 @@ class WordRNN:
         dh_raw = (1 - hs[t] ** 2) * dh
         # print("dh_raw shape:", dh_raw.shape)
 
-        x_t = one_hot(x_seq[t], self.W_x.shape[0]).reshape(-1, 1)  # vocab_size
+        x_t = one_hot(x_seq[t], self.W_x.shape[0]).reshape(-1, 1) 
         # print("x_t shape:", x_t.shape)
 
-        dWxh += numpy.dot(x_t, dh_raw.T)  # (vocab, 1) x (1, hidden) = (vocab, hidden)
+        dWxh += numpy.dot(x_t, dh_raw.T)  
         dWhh += numpy.dot(dh_raw, hs[t - 1].T) if t != 0 else 0
         dbh  += dh_raw
 
