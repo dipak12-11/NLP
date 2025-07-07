@@ -3,12 +3,12 @@ with open('charlie_cleaned_lyrics.txt', "r", encoding='utf-8') as f:
 text = text.replace('\n', ' ').replace('\r', ' ')
 # print(text[:1000])  # Print the first 1000 characters to verify the content
 import nltk
-nltk.download('punkt')
+# nltk.download('punkt')
 from nltk.tokenize import word_tokenize
 tokens = word_tokenize(text)
 # print(tokens[:100])  # Print the first 100 tokens to verify tokenization
 
-seq_len=3
+seq_len=1
 input_sequences = []
 target=[]
 for i in range(len(tokens)-seq_len):
@@ -30,4 +30,7 @@ print("Input sequence example:", x[0:3])
 print("Target word example:", y[0:3])
 
 data=list(zip(x, y))
+print(data[0:3])  # Print the first 3 examples to verify the data structure                                                 
 # print("Number of training examples:", len(data))
+print("Vocabulary size:", len(word_to_idx))
+print(len(vocab))
