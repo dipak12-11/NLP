@@ -7,4 +7,10 @@ hidden_size = 64
 output_size = len(word_to_idx)
 
 model = WordRNN(input_size, hidden_size, output_size)
-train(model, data, epochs=50, learning_rate=0.01)
+train(model, data, epochs=10, learning_rate=0.047)
+from G_generate import generate_lyrics
+
+# Generate text
+seed = "love"
+output = generate_lyrics(model, seed, word_to_idx, idx_to_word, length=100)
+print("\n🎵 AI Lyrics:\n", output)

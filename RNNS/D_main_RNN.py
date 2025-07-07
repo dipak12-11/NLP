@@ -69,14 +69,14 @@ class WordRNN:
 
     # Backprop through time for hidden state
     dh = numpy.dot(self.W_y, dy) + dh_next  # shape: (hidden, 1)
-    print("dh shape:", dh.shape)
+    # print("dh shape:", dh.shape)
 
     for t in reversed(range(1)):
         dh_raw = (1 - hs[t] ** 2) * dh
-        print("dh_raw shape:", dh_raw.shape)
+        # print("dh_raw shape:", dh_raw.shape)
 
         x_t = one_hot(x_seq[t], self.W_x.shape[0]).reshape(-1, 1)  # vocab_size
-        print("x_t shape:", x_t.shape)
+        # print("x_t shape:", x_t.shape)
 
         dWxh += numpy.dot(x_t, dh_raw.T)  # (vocab, 1) x (1, hidden) = (vocab, hidden)
         dWhh += numpy.dot(dh_raw, hs[t - 1].T) if t != 0 else 0
