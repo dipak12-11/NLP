@@ -46,13 +46,13 @@ class WordRNN:
 
      for t in reversed(range(len(x_seq))):
         dy = numpy.copy(ps[t])
-        dy = numpy.copy(ps[t])
         if dy.ndim == 1:
            dy = dy.reshape(-1, 1)
-        target_idx = y_seq[t][0] if isinstance(y_seq[t], (list, numpy.ndarray)) else y_seq[t]
+        target_idx = y_seq 
         dy[target_idx, 0] -= 1
         
-        loss += -numpy.log(ps[t][y_seq[t]])
+        loss += -numpy.log(ps[t][target_idx, 0])  # Ensure scalar value
+
 
         dWhy += numpy.dot(dy, hs[t].T)
         dby  += dy
