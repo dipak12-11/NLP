@@ -42,7 +42,7 @@ def fully_clean_text(text):
     # Remove punctuation
     text = re.sub(rf"[{re.escape(string.punctuation)}]", "", text)
     # Collapse multiple spaces
-    text = re.sub(r'\s+', ' ', text)
+    # text = re.sub(r'\s+', ' ', text)
     return text.strip()
                        # Trim start/end
 
