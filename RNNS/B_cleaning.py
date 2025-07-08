@@ -1,5 +1,6 @@
 import re
 import contractions
+import string
 
 # --- Step 1: Clean Metadata ---
 def clean_lyrics(raw_text):
@@ -34,12 +35,24 @@ def replace_slang(text, slang_dict):
         text = re.sub(pattern, replacement, text, flags=re.IGNORECASE)
     return text
 
+
+def fully_clean_text(text):
+    # Remove text in parentheses
+    text = re.sub(r'\([^)]*\)', '', text)
+    # Remove punctuation
+    text = re.sub(rf"[{re.escape(string.punctuation)}]", "", text)
+    # Collapse multiple spaces
+    text = re.sub(r'\s+', ' ', text)
+    return text.strip()
+                       # Trim start/end
+
 # --- Step 4: Final pipeline ---
 def full_preprocess(text):
     text = clean_lyrics(text)
     text = contractions.fix(text)
     text = fix_in_apostrophe(text)
     text = replace_slang(text, slang_dict)
+    text = fully_clean_text(text)
     return text
 
 # --- Run it ---
