@@ -27,7 +27,7 @@ class WordRNN:
    def forward(self, x_seq, h_prev):
         hs,ps={},{}
         hs[-1]=h_prev
-        for t in range(1):
+        for t in range(len(x_seq)):
             x_t=one_hot(x_seq[t],self.W_x.shape[0]).reshape(-1, 1)  # shape: (vocab_size, 1)
             # print("x_t shape:", x_t.shape)
             # print("hs[t-1] shape:", hs[t-1].shape, "t:", t)
@@ -53,7 +53,7 @@ class WordRNN:
 
     
     t = len(x_seq) - 1  
-    dy = numpy.copy(ps[t]) )
+    dy = numpy.copy(ps[t]) 
 
     if dy.ndim == 1:
         dy = dy.reshape(-1, 1)
