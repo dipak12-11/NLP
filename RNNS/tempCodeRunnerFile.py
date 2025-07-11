@@ -1,17 +1,14 @@
-from D_main_RNN import WordRNN
-from C_train_data import x,y,word_to_idx,idx_to_word,data
-from E_train_RNN import train
-from F_generate import generate_lyrics
-
-input_size = len(word_to_idx)
-hidden_size = 64
-output_size = len(word_to_idx)
-
-model = WordRNN(input_size, hidden_size, output_size)
-train(model, data, epochs=80, learning_rate=0.047)
-
-
-# Generate text
-seed = "love"
-output = generate_lyrics(model, seed, word_to_idx, idx_to_word, length=100)
-print("\n🎵 AI Lyrics:\n", output)
+def one_hot(index,size):
+#     """
+#     Create a one-hot encoded vector of a given size with a 1 at the specified index.
+    
+#     Args:
+#         index (int): The index to set to 1 in the one-hot vector.
+#         size (int): The size of the one-hot vector.
+        
+#     Returns:
+#         numpy.ndarray: A one-hot encoded vector of the specified size.
+#     """
+#     vector = numpy.zeros(size, dtype=int)
+#     vector[index] = 1
+#     return vector
