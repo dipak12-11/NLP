@@ -6,7 +6,7 @@ import nltk
 # nltk.download('punkt')
 from nltk.tokenize import word_tokenize
 tokens = word_tokenize(text)
-print(tokens[:100])  # Print the first 100 tokens to verify tokenization
+# print(tokens[:100])  # Print the first 100 tokens to verify tokenization
 
 seq_len=1
 input_sequences = []

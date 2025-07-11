@@ -8,7 +8,7 @@ hidden_size = 64
 output_size = len(word_to_idx)
 
 model = WordRNN(input_size, hidden_size, output_size)
-train(model, data, epochs=1, learning_rate=0.047)
+train(model, data, epochs=80, learning_rate=0.047)
 
 
 # Generate text
