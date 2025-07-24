@@ -8,7 +8,7 @@ hidden_size = 64
 output_size = len(word_to_idx)
 
 model = WordRNN( embedding_dim, hidden_size, vocab_size)
-train(model, data, epochs=50, learning_rate=0.047)
+train(model, data, epochs=85, learning_rate=0.055)
 
 # Generate text
 seed = "love"

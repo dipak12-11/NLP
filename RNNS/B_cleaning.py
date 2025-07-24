@@ -56,7 +56,7 @@ def full_preprocess(text):
     return text
 
 # --- Run it ---
-with open(r"D:\ML\learn_and_practice\NLP\RNNS\charlie_puth.txt", "r", encoding='utf-8') as f:
+with open(r"D:\ML\learn_and_practice\NLP\charlie_puth.txt", "r", encoding='utf-8') as f:
     raw_data = f.read()
 
 cleaned_lyrics = full_preprocess(raw_data)
