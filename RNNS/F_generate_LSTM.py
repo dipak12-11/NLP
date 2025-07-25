@@ -12,7 +12,6 @@ def generate_lyrics_lstm(model, seed_word, word_to_idx, idx_to_word, length=50):
     x = model.E[word_idx].reshape(-1, 1)
 
     for _ in range(length):
-        print("#####################################")
         # LSTM gate calculations
         i = model.sigmoid(model.W_ix @ x + model.W_ih @ h + model.b_i)
         f = model.sigmoid(model.W_fx @ x + model.W_fh @ h + model.b_f)

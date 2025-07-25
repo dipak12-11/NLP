@@ -1,27 +1,28 @@
 import numpy as np
 class WordLSTM:
-   def __init__(self, vocab_size, embedding_dim, hidden_dim, learning_rate=0.01,embedding_matrix=None):
+   def __init__(self, vocab_size, embedding_dim, hidden_dim,seq_len,learning_rate=0.01,embedding_matrix=None):
         self.vocab_size = vocab_size
         self.embedding_dim = embedding_dim
         self.hidden_dim = hidden_dim
         self.learning_rate = learning_rate
+        self.seq_len = seq_len
 
         # Embedding matrix
         self.E = embedding_matrix if embedding_matrix is not None else np.random.randn(vocab_size, embedding_dim) * 0.01
         # Input gate params
         self.W_ix = np.random.randn(hidden_dim, embedding_dim) * 0.01
         self.W_ih = np.random.randn(hidden_dim, hidden_dim) * 0.01
-        self.b_i = np.zeros((hidden_dim, 1))
+        self.b_i = np.zeros((hidden_dim,1 ))
 
         # Forget gate params
         self.W_fx = np.random.randn(hidden_dim, embedding_dim) * 0.01
         self.W_fh = np.random.randn(hidden_dim, hidden_dim) * 0.01
-        self.b_f = np.zeros((hidden_dim, 1))
+        self.b_f = np.zeros((hidden_dim,1))
 
         # Output gate params
         self.W_ox = np.random.randn(hidden_dim, embedding_dim) * 0.01
         self.W_oh = np.random.randn(hidden_dim, hidden_dim) * 0.01
-        self.b_o = np.zeros((hidden_dim, 1))
+        self.b_o = np.zeros((hidden_dim,1))
 
         # Cell gate params
         self.W_cx = np.random.randn(hidden_dim, embedding_dim) * 0.01
@@ -30,7 +31,7 @@ class WordLSTM:
 
         # Output layer
         self.W_y = np.random.randn(vocab_size, hidden_dim) * 0.01
-        self.b_y = np.zeros((vocab_size, 1))
+        self.b_y = np.zeros((vocab_size,1))
 
    def sigmoid(self, x):
         return 1 / (1 + np.exp(-x))
@@ -50,11 +51,15 @@ class WordLSTM:
 
         for t, idx in enumerate(inputs):
             # print(f"Processing timestep {t} with input index {idx}")
-            x = inputs.reshape(-1, 1)
-            x_s[t] = x
+          #   x = inputs.reshape(-1, 1)
+          #   print(f"Input shape: {inputs.shape}")
+            
+            x_s[t] = inputs[t]
+            x=inputs[t].reshape(-1, 1)  # Reshape to match embedding dimension
+          #   print(f"Input shape: {x.shape}")
             # LSTM gate calculations
-            # print(self.W_ix.shape, x.shape)
-            i_s[t] = self.sigmoid(self.W_ix @ x + self.W_ih @ h_s[t-1] + self.b_i)
+          #   print(self.W_ix.shape, x.shape)
+            i_s[t] = self.sigmoid(self.W_ix @ x+ self.W_ih @ h_s[t-1] + self.b_i)
             f_s[t] = self.sigmoid(self.W_fx @ x + self.W_fh @ h_s[t-1] + self.b_f)
             o_s[t] = self.sigmoid(self.W_ox @ x + self.W_oh @ h_s[t-1] + self.b_o)
             g_s[t] = np.tanh(self.W_cx @ x + self.W_ch @ h_s[t-1] + self.b_c)
@@ -65,6 +70,7 @@ class WordLSTM:
             y_hat = self.W_y @ h_s[t] + self.b_y
             p = np.exp(y_hat) / np.sum(np.exp(y_hat))
             ps[t] = p
+          #   print(f"Output shape: {y_hat.shape}, Probability shape: {p.shape}")
         return (ps,x_s, h_s, c_s, i_s, f_s, o_s, g_s)
     
    def backward(self, X_seq, Y_seq, cache):
@@ -111,19 +117,23 @@ class WordLSTM:
         dg_raw = self.dtanh(g_s[t])     * (dc * i_s[t])
 
         # Param gradients
-        dW_ix += di_raw @ x_s[t].T
+     #    print(f"di_raw shape: {di_raw.shape}, x_s[t].T shape: {x_s[t].T.shape}")
+     #    print(f"dW_ix shape: {dW_ix.shape}, dW_ih shape: {dW_ih.shape}")
+        dW_ix += di_raw @ x_s[t].reshape(1,-1)
+     #    print(f"di_raw shape: {di_raw.shape}, h_s[t-1].T shape: {h_s[t-1].T.shape}")
+     #    print(h_s)
         dW_ih += di_raw @ h_s[t-1].T
         db_i += di_raw
 
-        dW_fx += df_raw @ x_s[t].T
+        dW_fx += df_raw @ x_s[t].reshape(1,-1)
         dW_fh += df_raw @ h_s[t-1].T
         db_f += df_raw
 
-        dW_ox += do_raw @ x_s[t].T
+        dW_ox += do_raw @ x_s[t].reshape(1,-1)
         dW_oh += do_raw @ h_s[t-1].T
         db_o += do_raw
 
-        dW_cx += dg_raw @ x_s[t].T
+        dW_cx += dg_raw @ x_s[t].reshape(1,-1)
         dW_ch += dg_raw @ h_s[t-1].T
         db_c += dg_raw
 

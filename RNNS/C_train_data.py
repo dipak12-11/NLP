@@ -8,7 +8,7 @@ text = text.replace('\n', ' ').replace('\r', ' ')
 tokens = word_tokenize(text)
 
 
-seq_len=1
+seq_len=10
 input_sequences = []
 target=[]
 for i in range(len(tokens)-seq_len):
@@ -42,7 +42,7 @@ for word in vocab:
     else:
         embedding_matrix[word_to_idx[word]] = np.random.normal(scale=0.6, size=(embedding_dim,))
         oov_count.append(word)
-print(f"Number of OOV words: {(oov_count)}")
+# print(f"Number of OOV words: {(oov_count)}")
 
 
 X_embed=[]
@@ -54,4 +54,4 @@ y = [word_to_idx[word] for word in target]
 # print(y[:5])  # Display first 5 targets for verification
 
 data=list(zip(X_embed, y))
-# print(data[:5])  # Display first 5 sequences for verification
+# print(data[0][0].shape)  # Display first 5 sequences for verification

@@ -6,10 +6,10 @@ from F_generate_LSTM import generate_lyrics_lstm
 embedding_size = 50
 hidden_size = 64
 output_size = len(word_to_idx)
-model = WordLSTM(vocab_size,embedding_size, hidden_size)
-train(model, data, epochs=10, learning_rate=0.055)
+model = WordLSTM(vocab_size,embedding_size, hidden_size,seq_len=4)
+train(model, data, epochs=100, learning_rate=0.0001)
 # Generate text
-seed = "love"
-output = generate_lyrics_lstm(model, seed, word_to_idx, idx_to_word, length=10)
+seed = "you"
+output = generate_lyrics_lstm(model, seed, word_to_idx, idx_to_word, length=50)
 print("\n🎵 AI Lyrics:\n", output)
 
