@@ -51,6 +51,7 @@ for seq in input_sequences:
     X_embed.append(np.array(embed_seq))
 
 y = [word_to_idx[word] for word in target]
-
+# print(y[:5])  # Display first 5 targets for verification
 
 data=list(zip(X_embed, y))
+# print(data[:5])  # Display first 5 sequences for verification
