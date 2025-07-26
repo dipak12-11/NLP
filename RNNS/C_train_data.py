@@ -8,7 +8,7 @@ text = text.replace('\n', ' ').replace('\r', ' ')
 tokens = word_tokenize(text)
 
 
-seq_len=10
+seq_len=3
 input_sequences = []
 target=[]
 for i in range(len(tokens)-seq_len):

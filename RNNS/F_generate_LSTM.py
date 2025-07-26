@@ -24,10 +24,33 @@ def generate_lyrics_lstm(model, seed_word, word_to_idx, idx_to_word, length=50):
 
         # Output layer
         y = model.W_y @ h + model.b_y
-        y -= np.max(y)  # softmax stability
-        p = np.exp(y) / np.sum(np.exp(y))
+        # y -= np.max(y)  # softmax stability
+        p = np.exp(y - np.max(y)) / np.sum(np.exp(y - np.max(y)))
+        # print(p[:10])
+        # print(type(p))
+        # print(p.shape)
+        # print(np.sum(p))
+        
+        p_flat = p.ravel()  # or use p.flatten()
 
-        idx = np.random.choice(range(vocab_size), p=p.ravel())
+        # Get indices of top 5 values
+        top_5_indices = np.argsort(p_flat)[-5:][::-1]
+
+# Get top 5 values using those indices
+        top_5_values = p_flat[top_5_indices]
+
+        # print("Top 5 indices:", top_5_indices)
+        # print("Top 5 values:", top_5_values)
+        # top5_indices = np.argsort(p)[-5:][::-1]  
+        # top5_probs = p[top5_indices]
+        # print(f"Top 5 indices: {top5_indices}, Top 5 probabilities: {top5_probs}")\
+        r=[]
+        for i in top_5_indices:
+            r.append(idx_to_word[i])
+        print(r)
+        idx = top_5_indices[0]
+        # idx = np.argmax(p) 
+
         word = idx_to_word[idx]
         generated.append(word)
 
